@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>TZ</title>
+    {% endif %}
+</head>
+<body>
+    <div>
+        <a href="/">User list</a>
+        <a href="/add">Add new user</a>
+    </div>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
