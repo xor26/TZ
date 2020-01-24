@@ -12,3 +12,8 @@ class MongoConfig:
     DB_NAME = "examples"
     COLLECTION = "inventory"
 
+
+class CeleryConfig:
+    IMAGE_WIDTH = 150
+    IMAGE_HEIGHT = 150
+    PROCESSED_IMG_FOLDER = "file_storage/images_processed"

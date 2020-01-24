@@ -5,6 +5,7 @@ from configs import FlaskConfig
 from forms import UserAddForm
 from models import User
 from mongo_gateway import MongoGateway
+from tasks import resize_photo as resize_photo_celery_task
 
 app = Flask(__name__)
 app.config.from_object(FlaskConfig)
@@ -31,9 +32,10 @@ def user_add_form_send():
     photo.save(photo_path)
     # TODO save user to mongo
     user = User(name=request.form.get("name"), photo=photo_path)
-    mongo.insert_user(user=user)
+    user_id = mongo.insert_user(user=user)
 
     # TODO run celery resize task
+    resize_photo_celery_task.delay(user_id=user_id, photo_path=photo_path)
     return redirect("/")
 
 

@@ -11,18 +11,22 @@ class MongoGateway:
         self.collection = db[Conf.COLLECTION]
 
     def get_user_by_id(self, user_id):
-        pass
+        return self.collection.find_one({"_id": user_id})
 
     def get_user_list(self):
         for user in self.collection.find():
             yield user
 
     def change_photo(self, user_id, new_photo):
-        pass
+        self.collection.update_one({"_id": user_id}, {"$set": {"photo": new_photo}})
 
     def insert_user(self, user: User):
-        self.collection.insert_one({"name": user.name, "photo": user.photo})
+        result = self.collection.insert_one({"name": user.name, "photo": user.photo})
+        if result:
+            user_id = result.inserted_id
+            return user_id
+        else:
+            return False
 
     def purge_db(self):
-        """"delete after"""
         self.collection.delete_many({})
