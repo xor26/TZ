@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
- user_add_form
-
+    <h1>New user</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}
+        </p>
+        <p>
+            {{ form.photo.label }}<br>
+            {{ form.photo() }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
 {% endblock %}
