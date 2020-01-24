@@ -25,17 +25,17 @@ def user_add_form_request():
 
 @app.route("/add", methods=["POST"])
 def user_add_form_send():
-    # TODO add validation here
+    # TODO add data validation here
 
     photo = request.files["photo"]
     photo_path = os.path.join(app.config['UPLOAD_FOLDER'], photo.filename)
     photo.save(photo_path)
-    # TODO save user to mongo
+
     user = User(name=request.form.get("name"), photo=photo_path)
     user_id = mongo.insert_user(user=user)
 
-    # TODO run celery resize task
-    resize_photo_celery_task.delay(user_id=user_id, photo_path=photo_path)
+    resize_photo_celery_task.delay(user_id=str(user_id), photo_path=photo_path)
+
     return redirect("/")
 
 

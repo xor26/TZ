@@ -1,5 +1,7 @@
 import celery as celery
 from PIL import Image
+from bson import ObjectId
+
 from configs import CeleryConfig as Conf
 from configs import MongoConfig
 from mongo_gateway import MongoGateway
@@ -16,4 +18,4 @@ def resize_photo(user_id, photo_path):
     new_photo_path = Conf.PROCESSED_IMG_FOLDER + "/processed_img." + img_format
     img.save(new_photo_path)
     db_gate = MongoGateway()
-    db_gate.change_photo(user_id=user_id, new_photo=new_photo_path)
+    db_gate.change_photo(user_id=ObjectId(user_id), new_photo=new_photo_path)

@@ -20,7 +20,7 @@ class TestApp(unittest.TestCase):
     def test_resize_img(self):
         user = User(name="Test User Resize", photo="file_storage/images_original/test_photo.jpg")
         user_id = self.mongo.insert_user(user=user)
-        resize_photo(user_id=user_id, photo_path=user.photo)
+        resize_photo(user_id=str(user_id), photo_path=user.photo)
 
         user = self.mongo.get_user_by_id(user_id)
 
