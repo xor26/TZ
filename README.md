@@ -15,3 +15,5 @@ https://docs.google.com/document/d/1u_CrShWVJQ3i2kugx7w-f9-hBWR_4Ur9lOnN1tXyRpc/
 ```celery -A tasks worker --loglevel=info```
 4. Run flask with
 ```python main.py```
+
+### Время выполнения ~5 часов
