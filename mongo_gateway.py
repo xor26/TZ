@@ -1,5 +1,5 @@
 from bson import ObjectId
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING
 from configs import MongoConfig as Conf
 from models import User
 
@@ -15,7 +15,7 @@ class MongoGateway:
         return self.collection.find_one({"_id": user_id})
 
     def get_users(self):
-        for user in self.collection.find():
+        for user in self.collection.find().sort([("name", ASCENDING)]):
             yield user
 
     def change_photo(self, user_id: ObjectId, new_photo: str):

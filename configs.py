@@ -4,6 +4,7 @@ import os
 class FlaskConfig:
     SECRET_KEY = os.environ.get("SECRET_KEY") or "xxx"
     UPLOAD_FOLDER = "file_storage/images_original"
+    USERS_PER_PAGE = 3
 
 
 class MongoConfig:
