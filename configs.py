@@ -10,7 +10,7 @@ class FlaskConfig:
 class MongoConfig:
     HOST = "localhost"
     PORT = 27017
-    DB_NAME = "examples"
+    DB_NAME = "test"
     COLLECTION = "inventory"
 
 
