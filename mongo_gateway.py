@@ -1,3 +1,4 @@
+from bson import ObjectId
 from pymongo import MongoClient
 from configs import MongoConfig as Conf
 from models import User
@@ -10,7 +11,7 @@ class MongoGateway:
         db = client[Conf.DB_NAME]
         self.collection = db[Conf.COLLECTION]
 
-    def get_user_by_id(self, user_id):
+    def get_user_by_id(self, user_id: ObjectId) -> User:
         return self.collection.find_one({"_id": user_id})
 
     def get_user_list(self):

@@ -1,11 +1,14 @@
 import os
 import time
+
+from bson import ObjectId
 from flask import Flask, render_template, request, redirect
 from configs import FlaskConfig
 from forms import UserAddForm
 from models import User
 from mongo_gateway import MongoGateway
 from tasks import resize_photo as resize_photo_celery_task
+from bson.json_util import dumps
 
 app = Flask(__name__)
 app.config.from_object(FlaskConfig)
@@ -40,6 +43,29 @@ def user_add_form_send():
     resize_photo_celery_task.delay(user_id=str(user_id), photo_path=photo_path)
 
     return redirect("/")
+
+
+@app.route("/api/users", methods=["GET"])
+def api_get_user_list():
+    users = list(mongo.get_user_list())
+    response = app.response_class(
+        response=dumps(users),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
+@app.route("/api/users/<user_id>", methods=["GET"])
+def api_get_user_by_id(user_id):
+    user_id = ObjectId(user_id)
+    user = mongo.get_user_by_id(user_id)
+    response = app.response_class(
+        response=dumps(user),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 if __name__ == "__main__":
