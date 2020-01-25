@@ -1,5 +1,5 @@
 import os
-
+import time
 from flask import Flask, render_template, request, redirect
 from configs import FlaskConfig
 from forms import UserAddForm
@@ -28,7 +28,10 @@ def user_add_form_send():
     # TODO add data validation here
 
     photo = request.files["photo"]
-    photo_path = os.path.join(app.config['UPLOAD_FOLDER'], photo.filename)
+    file_format = photo.filename.split('.')[-1]
+    new_file_name = str(time.time()).replace(".", "")
+    new_file_name = f"{new_file_name}.{file_format}"
+    photo_path = os.path.join(app.config['UPLOAD_FOLDER'], new_file_name)
     photo.save(photo_path)
 
     user = User(name=request.form.get("name"), photo=photo_path)
