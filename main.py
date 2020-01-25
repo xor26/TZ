@@ -17,7 +17,7 @@ mongo = MongoGateway()
 
 @app.route("/", methods=["GET"])
 def user_list():
-    return render_template("user_list.html", title="Users", users=mongo.get_user_list())
+    return render_template("user_list.html", title="Users", users=mongo.get_users())
 
 
 @app.route("/add", methods=["GET"])
@@ -47,7 +47,7 @@ def user_add_form_send():
 
 @app.route("/api/users", methods=["GET"])
 def api_get_user_list():
-    users = list(mongo.get_user_list())
+    users = list(mongo.get_users())
     response = app.response_class(
         response=dumps(users),
         status=200,

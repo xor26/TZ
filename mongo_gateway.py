@@ -14,11 +14,11 @@ class MongoGateway:
     def get_user_by_id(self, user_id: ObjectId) -> User:
         return self.collection.find_one({"_id": user_id})
 
-    def get_user_list(self):
+    def get_users(self):
         for user in self.collection.find():
             yield user
 
-    def change_photo(self, user_id, new_photo):
+    def change_photo(self, user_id: ObjectId, new_photo: str):
         self.collection.update_one({"_id": user_id}, {"$set": {"photo": new_photo}})
 
     def insert_user(self, user: User):
