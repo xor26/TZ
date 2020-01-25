@@ -23,14 +23,16 @@ def user_list():
     i = 0
     for user in mongo.get_users():
         i += 1
-        prev_page_last_user = (page_number-1) * FlaskConfig.USERS_PER_PAGE
+        prev_page_last_user = (page_number - 1) * FlaskConfig.USERS_PER_PAGE
         current_page_last_user = FlaskConfig.USERS_PER_PAGE * page_number
         if prev_page_last_user < i <= current_page_last_user:
             users.append(user)
         if i > current_page_last_user:
             break
 
-    pages = math.ceil(i/FlaskConfig.USERS_PER_PAGE)
+    user_count = mongo.get_users_count()
+    pages = math.ceil(user_count / FlaskConfig.USERS_PER_PAGE)
+
     return render_template("user_list.html", title="Users", users=users, pages=pages)
 
 

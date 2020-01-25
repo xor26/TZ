@@ -14,6 +14,9 @@ class MongoGateway:
     def get_user_by_id(self, user_id: ObjectId) -> User:
         return self.collection.find_one({"_id": user_id})
 
+    def get_users_count(self) -> int:
+        return self.collection.count()
+
     def get_users(self):
         for user in self.collection.find().sort([("name", ASCENDING)]):
             yield user
