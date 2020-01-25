@@ -18,7 +18,7 @@ mongo = MongoGateway()
 
 @app.route("/", methods=["GET"])
 def user_list():
-    page_number = int(request.args["page"])
+    page_number = request.args.get("page", 1, type=int)
     users = []
     i = 0
     for user in mongo.get_users():
